@@ -14,29 +14,28 @@ namespace WpfApp1
 	public partial class MainWindow : Window
 	{
 
-		bool muted;
 		double volume;
 		double prevVolume;
 		string path;
-		bool isChecked = false;
-		bool firstRun = true;
+
 
 		WMPLib.WindowsMediaPlayer player;
 		public MainWindow()
 		{
 			InitializeComponent();
 
-			muted = false;
 
 			player = new WMPLib.WindowsMediaPlayer();
 
 			volume = 25;
 			player.settings.volume = Convert.ToInt32(volume);
 			player.settings.autoStart = true;
+			player.uiMode = "full";
 			VolumeUpdate();
 			SongSelect();
 
 			player.PositionChange += UpdateSongPosition;
+			//DelayAction(3000, TimerLoop);
 
 
 
@@ -56,23 +55,45 @@ namespace WpfApp1
 			{
 				path = file.FileName;
 			}
+			else
+			{
+				SongSelect();
+			}
 			Console.WriteLine(path);
 			player.URL = path;
 			Current_Playing.Text = player.currentMedia.name;
 			Progress_Slider.Maximum = Convert.ToInt32(player.currentMedia.duration);
 			Console.WriteLine(player.currentMedia.durationString);
 			Max_Time.Text = player.currentMedia.durationString;
+			
+
 
 
 
 		}
 
+		private void TimerLoop()
+		{
+			try
+			{
+				while (Progress_Slider.Value != player.controls.currentPosition * 100 / player.currentMedia.duration)
+				{
+					
+					Progress_Slider.Value = player.controls.currentPosition * 100 / player.currentMedia.duration;
+
+
+				}
+			}
+			catch
+			{
+
+			}
+		}
 		
 		private void UpdateSongPosition(double a, double b)
 		{
 
 			Progress_Slider.Value = player.controls.currentPosition * 100 / player.currentMedia.duration;
-			Progress_Slider.Value = Progress_Slider.Value;
 			Current_Time.Text = player.controls.currentPositionString;
 			Progress_Slider.Maximum = player.currentMedia.duration;
 			Max_Time.Text = player.currentMedia.durationString;
@@ -105,7 +126,7 @@ namespace WpfApp1
 			SongSelect();
 		}
 
-		private void Mute()
+		private void Mute(object sender, RoutedEventArgs e)
 		{
 			if (Mute_Toggle.IsChecked == true)
 			{
@@ -120,21 +141,6 @@ namespace WpfApp1
 			}
 
 			VolumeUpdate();
-		}
-
-
-		private void MuteChecked(object sender, RoutedEventArgs e)
-		{
-			Mute();
-
-			Console.WriteLine("Mute Checked");
-		}
-
-		private void MuteUnchecked(object sender, RoutedEventArgs e)
-		{
-			Mute();
-
-			Console.WriteLine("Mute Unchecked");
 		}
 
 		private void VolumeSlider(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -157,6 +163,10 @@ namespace WpfApp1
 			timer.Start();
 		}
 
+		private void temp(object sender, RoutedEventArgs e)
+		{
+			UpdateSongPosition(0, 0);
+		}
 	}
 }
 
