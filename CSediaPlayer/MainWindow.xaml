@@ -6,12 +6,20 @@
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <TextBlock HorizontalAlignment="Left" Height="14.029" Margin="82.331,319.403,0,0" TextWrapping="Wrap" Text="Redifogjklf" VerticalAlignment="Top" Width="45.324"/>
-        <Button x:Name="play" Content="Play" HorizontalAlignment="Left" Height="50.719" Margin="375.173,319.403,0,0" VerticalAlignment="Top" Width="142.446" Click="Play"/>
-        <Button x:Name="pause" Content="Pause" HorizontalAlignment="Left" Height="50.719" Margin="522.619,319.403,0,0" VerticalAlignment="Top" Width="146.762" Click="Pause"/>
-        <Button x:Name="stop" Content="Stop" HorizontalAlignment="Left" Height="50.719" Margin="82.331,319.403,0,0" VerticalAlignment="Top" Width="136.08" Click="Stop"/>
-        <Button x:Name="select" Content="Song Select" HorizontalAlignment="Left" Height="50.719" Margin="223.411,319.403,0,0" VerticalAlignment="Top" Width="146.762" Click="Select"/>
+	<Grid>
+		<TextBlock x:Name="Current_Playing_Text" HorizontalAlignment="Left" Height="22.029" Margin="82.331,173.403,0,0" TextWrapping="Wrap" Text="Currently Playing:" VerticalAlignment="Top" Width="93.324"/>
+		<Button x:Name="play" Content="Play" HorizontalAlignment="Left" Height="50.719" Margin="375.173,53.403,0,0" VerticalAlignment="Top" Width="142.446" Click="Play"/>
+		<Button x:Name="pause" Content="Pause" HorizontalAlignment="Left" Height="50.719" Margin="522.619,53.403,0,0" VerticalAlignment="Top" Width="146.762" Click="Pause"/>
+		<Button x:Name="stop" Content="Stop" HorizontalAlignment="Left" Height="50.719" Margin="82.331,53.403,0,0" VerticalAlignment="Top" Width="136.08" Click="Stop"/>
+		<Button x:Name="select" Content="Song Select" HorizontalAlignment="Left" Height="50.719" Margin="223.411,53.403,0,0" VerticalAlignment="Top" Width="146.762" Click="Select"/>
+		<Slider x:Name="Progress_Slider" HorizontalAlignment="Left" Height="30" Margin="82.331,275,0,0" VerticalAlignment="Top" Width="587.05" Value="0.1"/>
+		<TextBlock x:Name="Current_Playing" HorizontalAlignment="Left" Height="56" Margin="181,173,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="601"><Run Text="Now Playing"/><LineBreak/><Run/></TextBlock>
+		<TextBlock x:Name="Current_Time" HorizontalAlignment="Left" Margin="55.321,275,0,0" TextWrapping="Wrap" Text="0:00" VerticalAlignment="Top"/>
+		<TextBlock x:Name="Max_Time" HorizontalAlignment="Left" Margin="674.381,275,0,0" TextWrapping="Wrap" Text="0:00" VerticalAlignment="Top"/>
+		<Slider x:Name="Volume_Slider" HorizontalAlignment="Left" Height="26" Margin="115,331,0,0" VerticalAlignment="Top" Width="103.411" ValueChanged="VolumeSlider" Maximum="100"/>
+		<TextBlock x:Name="Volume_Text" HorizontalAlignment="Left" Height="21" Margin="145,310,0,0" TextWrapping="Wrap" Text="Volume" VerticalAlignment="Top" Width="46"/>
+		<ToggleButton x:Name="Mute_Toggle" Content="Mute" HorizontalAlignment="Left" Height="21" Margin="223,331,0,0" VerticalAlignment="Top" Width="56" Checked="MuteChecked" Unchecked="MuteUnchecked"/>
+		<Button x:Name="tempUpdate" Content="Update song pos" HorizontalAlignment="Left" Height="29" Margin="548,232,0,0" VerticalAlignment="Top" Width="121"/>
 
-    </Grid>
+	</Grid>
 </Window>
