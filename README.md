@@ -1,2 +1,2 @@
 # CSediaPlayer
-A MediaPlayer wrote in C
+A MediaPlayer wrote in C#
