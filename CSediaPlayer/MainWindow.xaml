@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Closing="Close">
 	<Grid>
 		<TextBlock x:Name="Current_Playing_Text" HorizontalAlignment="Left" Height="22.029" Margin="82.331,173.403,0,0" TextWrapping="Wrap" Text="Currently Playing:" VerticalAlignment="Top" Width="93.324"/>
 		<Button x:Name="play" Content="Play" HorizontalAlignment="Left" Height="50.719" Margin="375.173,53.403,0,0" VerticalAlignment="Top" Width="142.446" Click="Play"/>

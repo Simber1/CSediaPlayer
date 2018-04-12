@@ -17,6 +17,8 @@ namespace WpfApp1
 		double volume;
 		double prevVolume;
 		string path;
+		bool FirstRun =true;
+		Thread LoopingThread;
 
 
 		WMPLib.WindowsMediaPlayer player;
@@ -33,8 +35,10 @@ namespace WpfApp1
 			player.uiMode = "full";
 			VolumeUpdate();
 			SongSelect();
+			LoopingThread = new Thread(Looper);
+			LoopingThread.Start();
 
-			player.PositionChange += UpdateSongPosition;
+
 			//DelayAction(3000, TimerLoop);
 
 
@@ -55,45 +59,41 @@ namespace WpfApp1
 			{
 				path = file.FileName;
 			}
-			else
-			{
-				SongSelect();
-			}
 			Console.WriteLine(path);
 			player.URL = path;
 			Current_Playing.Text = player.currentMedia.name;
-			Progress_Slider.Maximum = Convert.ToInt32(player.currentMedia.duration);
-			Console.WriteLine(player.currentMedia.durationString);
-			Max_Time.Text = player.currentMedia.durationString;
-			
-
-
 
 
 		}
 
-		private void TimerLoop()
-		{
-			try
-			{
-				while (Progress_Slider.Value != player.controls.currentPosition * 100 / player.currentMedia.duration)
-				{
-					
-					Progress_Slider.Value = player.controls.currentPosition * 100 / player.currentMedia.duration;
-
-
-				}
-			}
-			catch
-			{
-
-			}
-		}
 		
-		private void UpdateSongPosition(double a, double b)
+		private void Looper()
 		{
+			if (FirstRun)
+			{
+				Thread.Sleep(50);
+				FirstRun = false;
+			}
+			while (true)
+			{
+				System.Threading.Thread.Sleep(100);
+				
+				
+				if (player.currentMedia.duration > 1 && player.controls.currentPosition > 1)
+				{
+					this.Dispatcher.Invoke(() =>
+					{
+						UpdateSongPosition();
+					});
+				}
+			
+				
+			}
+		}
 
-			Progress_Slider.Value = player.controls.currentPosition * 100 / player.currentMedia.duration;
+		private void UpdateSongPosition()
+		{
+			Progress_Slider.Value = player.controls.currentPosition;
 			Current_Time.Text = player.controls.currentPositionString;
 			Progress_Slider.Maximum = player.currentMedia.duration;
 			Max_Time.Text = player.currentMedia.durationString;
@@ -165,7 +165,12 @@ namespace WpfApp1
 
 		private void temp(object sender, RoutedEventArgs e)
 		{
-			UpdateSongPosition(0, 0);
+			UpdateSongPosition();
+		}
+
+		private void Close(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			LoopingThread.Abort();
 		}
 	}
 }
