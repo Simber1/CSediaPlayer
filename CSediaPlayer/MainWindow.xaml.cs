@@ -58,10 +58,11 @@ namespace WpfApp1
 			if (file.ShowDialog() == true)
 			{
 				path = file.FileName;
-			}
-			Console.WriteLine(path);
-			player.URL = path;
-			Current_Playing.Text = player.currentMedia.name;
+                Console.WriteLine(path);
+                player.URL = path;
+                Current_Playing.Text = player.currentMedia.name;
+            }
+
 
 
 		}
@@ -71,24 +72,24 @@ namespace WpfApp1
 		{
 			if (FirstRun)
 			{
-				Thread.Sleep(50);
+				//Thread.Sleep(500);
 				FirstRun = false;
 			}
 			while (true)
 			{
 				System.Threading.Thread.Sleep(100);
-				
-				
-				if (player.currentMedia.duration > 1 && player.controls.currentPosition > 1)
-				{
-					this.Dispatcher.Invoke(() =>
-					{
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    if (player.currentMedia.duration > 1 && player.controls.currentPosition > 1)
+				    {
+					
 						UpdateSongPosition();
-					});
-				}
-			
-				
-			}
+					
+				    }
+                });
+
+            }
 		}
 
 		private void UpdateSongPosition()

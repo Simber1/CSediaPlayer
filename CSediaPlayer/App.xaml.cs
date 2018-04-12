@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace WpfApp1
+namespace CSediaPlayer
 {
     /// <summary>
     /// Interaction logic for App.xaml
