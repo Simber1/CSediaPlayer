@@ -17,7 +17,7 @@ namespace WpfApp1
 		double volume;
 		double prevVolume;
 		string path;
-		bool FirstRun =true;
+		bool FirstRun = true;
 		Thread LoopingThread;
 
 
@@ -58,9 +58,9 @@ namespace WpfApp1
 			if (file.ShowDialog() == true)
 			{
 				path = file.FileName;
-                Console.WriteLine(path);
-                player.URL = path;
-                Current_Playing.Text = player.currentMedia.name;
+				Console.WriteLine(path);
+				player.URL = path;
+				Current_Playing.Text = player.currentMedia.name;
             }
 
 
@@ -70,26 +70,21 @@ namespace WpfApp1
 		
 		private void Looper()
 		{
-			if (FirstRun)
-			{
-				//Thread.Sleep(500);
-				FirstRun = false;
-			}
 			while (true)
 			{
-				System.Threading.Thread.Sleep(100);
+				System.Threading.Thread.Sleep(50);
 
-                this.Dispatcher.Invoke(() =>
-                {
-                    if (player.currentMedia.duration > 1 && player.controls.currentPosition > 1)
-				    {
+				this.Dispatcher.Invoke(() =>
+				{
+					if (player.currentMedia.duration > 1 && player.controls.currentPosition > 1)
+					{
 					
 						UpdateSongPosition();
 					
-				    }
-                });
+					}
+				});
 
-            }
+			}
 		}
 
 		private void UpdateSongPosition()
@@ -148,20 +143,6 @@ namespace WpfApp1
 		{ 
 			volume = Volume_Slider.Value;
 			VolumeUpdate();
-		}
-
-		public static void DelayAction(int millisecond, Action action)
-		{
-			var timer = new DispatcherTimer();
-			timer.Tick += delegate
-
-			{
-				action.Invoke();
-				timer.Stop();
-			};
-
-			timer.Interval = TimeSpan.FromMilliseconds(millisecond);
-			timer.Start();
 		}
 
 		private void temp(object sender, RoutedEventArgs e)
