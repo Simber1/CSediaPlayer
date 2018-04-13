@@ -17,7 +17,6 @@ namespace WpfApp1
 		double volume;
 		double prevVolume;
 		string path;
-		bool FirstRun = true;
 		Thread LoopingThread;
 
 
@@ -38,12 +37,6 @@ namespace WpfApp1
 			LoopingThread = new Thread(Looper);
 			LoopingThread.Start();
 
-
-			//DelayAction(3000, TimerLoop);
-
-
-
-
 		}
 
 		private void SongSelect()
@@ -62,9 +55,6 @@ namespace WpfApp1
 				player.URL = path;
 				Current_Playing.Text = player.currentMedia.name;
             }
-
-
-
 		}
 
 		
