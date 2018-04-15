@@ -19,7 +19,6 @@ namespace WpfApp1
 		string path;
 		Thread LoopingThread;
 
-
 		WMPLib.WindowsMediaPlayer player;
 		public MainWindow()
 		{
@@ -27,11 +26,10 @@ namespace WpfApp1
 
 
 			player = new WMPLib.WindowsMediaPlayer();
-
+			
 			volume = 25;
 			player.settings.volume = Convert.ToInt32(volume);
 			player.settings.autoStart = true;
-			player.uiMode = "full";
 			VolumeUpdate();
 			SongSelect();
 			LoopingThread = new Thread(Looper);
@@ -46,15 +44,30 @@ namespace WpfApp1
 			OpenFileDialog file = new OpenFileDialog();
 			file.Filter = "Music (*.mp3)|*.mp3;*.m4a;*.wav|All Files (*.*)|*.*";
 			file.FilterIndex = 1;
-			file.Multiselect = false;
-
-			if (file.ShowDialog() == true)
+			file.Multiselect = true;
+			file.ShowDialog();
+			if (file.FileNames.Length > 1)
 			{
-				path = file.FileName;
-				Console.WriteLine(path);
-				player.URL = path;
-				Current_Playing.Text = player.currentMedia.name;
-            }
+				int counter = 0;
+				while (file.FileNames.Length < counter)
+				{
+					Console.WriteLine("multi files");
+					counter++;
+					path = file.FileName;
+					player.newPlaylist("test", path);
+				}
+			}
+			else
+			{
+				
+					Console.WriteLine("single file");
+					path = file.FileName;
+					Console.WriteLine(path);
+					player.URL = path;
+					Current_Playing.Text = player.currentMedia.name;
+				
+			}
+
 		}
 
 		
@@ -62,7 +75,7 @@ namespace WpfApp1
 		{
 			while (true)
 			{
-				System.Threading.Thread.Sleep(50);
+				Thread.Sleep(50);
 
 				this.Dispatcher.Invoke(() =>
 				{
@@ -146,5 +159,3 @@ namespace WpfApp1
 		}
 	}
 }
-
-
