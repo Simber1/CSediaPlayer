@@ -12,7 +12,7 @@
 		<Button x:Name="pause" Content="Pause" HorizontalAlignment="Left" Height="51" Margin="523,0,0,315" VerticalAlignment="Bottom" Width="146" Click="Pause"/>
 		<Button x:Name="stop" Content="Stop" HorizontalAlignment="Right" Height="51" Margin="0,0,574,315" VerticalAlignment="Bottom" Width="136" Click="Stop"/>
 		<Button x:Name="select" Content="Song Select" HorizontalAlignment="Right" Height="51" Margin="0,0,422,315" VerticalAlignment="Bottom" Width="147" Click="Select"/>
-		<Slider x:Name="Progress_Slider" Height="30" Margin="0,275,123,0" VerticalAlignment="Top" Value="0.1" HorizontalAlignment="Right" Width="587" Thumb.DragStarted="Progress_Slider_DragStarted" Thumb.DragCompleted="Progress_Slider_DragCompleted"/>
+		<Slider x:Name="Progress_Slider" Height="30" Margin="0,275,123,0" VerticalAlignment="Top" Value="0.1" HorizontalAlignment="Right" Width="587" Thumb.DragStarted="Progress_Slider_DragStarted" Thumb.DragCompleted="Progress_Slider_DragCompleted" Thumb.DragDelta="Progress_Slider_DragDelta"/>
 		<TextBlock x:Name="Current_Playing" HorizontalAlignment="Right" Height="56" Margin="0,173,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="601"><Run Text="Now Playing"/><LineBreak/><Run/></TextBlock>
 		<TextBlock x:Name="Current_Time" HorizontalAlignment="Left" Margin="55,275,0,0" TextWrapping="Wrap" Text="0:00" VerticalAlignment="Top"/>
 		<TextBlock x:Name="Max_Time" HorizontalAlignment="Right" Margin="0,275,96,0" TextWrapping="Wrap" Text="0:00" VerticalAlignment="Top"/>
