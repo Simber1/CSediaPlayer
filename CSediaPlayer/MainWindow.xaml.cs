@@ -16,6 +16,7 @@ namespace WpfApp1
 
 		double volume;
 		double prevVolume;
+        bool ProgressSliderChanging = false;
 		string path;
 		Thread LoopingThread;
 
@@ -66,7 +67,7 @@ namespace WpfApp1
 
 				this.Dispatcher.Invoke(() =>
 				{
-					if (player.currentMedia.duration > 1 && player.controls.currentPosition > 1)
+					if (player.currentMedia.duration > 1 && player.controls.currentPosition > 1 && !ProgressSliderChanging)
 					{
 					
 						UpdateSongPosition();
@@ -144,7 +145,17 @@ namespace WpfApp1
 		{
 			LoopingThread.Abort();
 		}
-	}
+
+        private void Progress_Slider_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            ProgressSliderChanging = true;
+        }
+
+        private void Progress_Slider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            ProgressSliderChanging = false;
+        }
+    }
 }
 
 
