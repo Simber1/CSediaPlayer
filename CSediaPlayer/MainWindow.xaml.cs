@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
@@ -16,7 +17,10 @@ namespace WpfApp1
 
 		double volume;
 		double prevVolume;
-		string path;
+        bool ProgressSliderChanging = false;
+        double LastProgressSliderThumbDeltaValue = 0;
+        Stopwatch LastProgressSliderDeltaEvent = new Stopwatch();
+        string path;
 		Thread LoopingThread;
 
 
@@ -66,7 +70,7 @@ namespace WpfApp1
 
 				this.Dispatcher.Invoke(() =>
 				{
-					if (player.currentMedia.duration > 1 && player.controls.currentPosition > 1)
+					if (player.currentMedia.duration > 1 && player.controls.currentPosition > 1 && !ProgressSliderChanging)
 					{
 					
 						UpdateSongPosition();
@@ -144,7 +148,42 @@ namespace WpfApp1
 		{
 			LoopingThread.Abort();
 		}
-	}
+
+        private void Progress_Slider_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            ProgressSliderChanging = true;
+            double NewPosition = Progress_Slider.Value;
+            player.controls.currentPosition = NewPosition;
+            LastProgressSliderThumbDeltaValue = NewPosition;
+            LastProgressSliderDeltaEvent.Start();
+        }
+
+        private void Progress_Slider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            ProgressSliderChanging = false;
+            double NewPosition = Progress_Slider.Value;
+            player.controls.currentPosition = NewPosition;
+            LastProgressSliderThumbDeltaValue = NewPosition;
+            LastProgressSliderDeltaEvent.Stop();
+        }
+
+        private void Progress_Slider_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        {
+            //DragDelta runs very often - to prevent lag we throw most of these events out
+            if (LastProgressSliderDeltaEvent.ElapsedMilliseconds<300)
+            {
+                return;
+            }
+
+            double NewPosition = Progress_Slider.Value;
+            if (Math.Abs(LastProgressSliderThumbDeltaValue-NewPosition) > 1)
+            {
+                player.controls.currentPosition = NewPosition;
+                LastProgressSliderThumbDeltaValue = NewPosition;
+                LastProgressSliderDeltaEvent.Restart();
+            }
+        }
+    }
 }
 
 
