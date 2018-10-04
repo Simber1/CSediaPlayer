@@ -84,7 +84,7 @@ namespace WpfApp1
 		private void UpdateSongPosition()
 		{
 			Progress_Slider.Value = player.controls.currentPosition;
-			Current_Time.Text = player.controls.currentPositionString;
+			if(player.controls.currentPosition == 0){Current_Time.Text = "00:00";}else{Current_Time.Text = player.controls.currentPositionString;}
 			Progress_Slider.Maximum = player.currentMedia.duration;
 			Max_Time.Text = player.currentMedia.durationString;
 		}
@@ -109,6 +109,7 @@ namespace WpfApp1
 		private void Stop(object sender, RoutedEventArgs e)
 		{
 			player.controls.stop();
+			UpdateSongPosition();
 		}
 
 		private void Select(object sender, RoutedEventArgs e)
