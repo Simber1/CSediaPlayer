@@ -84,7 +84,14 @@ namespace WpfApp1
 		private void UpdateSongPosition()
 		{
 			Progress_Slider.Value = player.controls.currentPosition;
-			if(player.controls.currentPosition == 0){Current_Time.Text = "00:00";}else{Current_Time.Text = player.controls.currentPositionString;}
+
+			if(player.controls.currentPosition == 0){
+				Current_Time.Text = "00:00";
+			}
+			else{
+				Current_Time.Text = player.controls.currentPositionString;
+			}
+
 			Progress_Slider.Maximum = player.currentMedia.duration;
 			Max_Time.Text = player.currentMedia.durationString;
 		}
@@ -92,8 +99,15 @@ namespace WpfApp1
 
 		private void VolumeUpdate()
 		{
-			player.settings.volume = Convert.ToInt32(volume); //Updating the players volume 
-			Volume_Slider.Value = volume;  //Setting the sliders pos = to the volume
+			if (Mute_Toggle.IsChecked == false)
+			{
+				player.settings.volume = Convert.ToInt32(volume); //Updating the players volume 
+				Volume_Slider.Value = volume;  //Setting the sliders pos = to the volume
+			}
+			else 
+			{
+				player.settings.volume = Convert.ToInt32(0);
+			}
 		}
 
 		private void Pause(object sender, RoutedEventArgs e)
@@ -127,7 +141,10 @@ namespace WpfApp1
 			}
 			else
 			{
-				volume = prevVolume; //unmuting
+				if (prevVolume == Volume_Slider.Value){
+					volume = prevVolume; //unmuting
+				}
+
 				Mute_Toggle.Content = "Mute";
 			}
 
